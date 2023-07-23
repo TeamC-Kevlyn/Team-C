@@ -3,7 +3,7 @@ import csv
 
 
 # create a file to csv file.
-fp = Path.cwd()/"profits and loss.csv"
+fp = Path.cwd()/'csv_report'/"profits and loss.csv"
 
 # read the csv file to append profit and quantity from the csv.
 with fp.open(mode="r", encoding="UTF-8", newline="") as file:
@@ -54,11 +54,8 @@ for item in range(1, len(data)):
 print("Day and Amount of the highest net profit increment:", increment)
 # increment()
 
-from pathlib import Path
-import csv
-
 # create a file to csv file.
-fp = Path.cwd()/"Overhead.csv"
+fp = Path.cwd()/'csv_report'/"Overhead.csv"
 
 # read the csv file to append overhead from the csv.
 with fp.open(mode="r", encoding="UTF-8", newline="") as file:
@@ -109,11 +106,8 @@ def calculate_overhead_percentage(Overhead_cost):
     return f'[HIGHEST OVERHEAD] {highest_category} : {highest_percentage}%' 
 print(calculate_overhead_percentage(Overhead_cost))
 
-from pathlib import Path
-import csv
-
 # Create a file path to the CSV file
-fp = Path.cwd() / "CashOnHand.csv"
+fp = Path.cwd() /'csv_report'/"CashOnHand.csv"
 
 # Read the CSV file and store the records
 with fp.open(mode="r", encoding="UTF-8", newline="") as file:
