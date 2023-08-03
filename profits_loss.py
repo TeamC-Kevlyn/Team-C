@@ -46,3 +46,26 @@ for item in range(1, len(data)):
         print(f"[NET PROFIT DEFECIT] Day : {data[item][0]} , AMOUNT : {difference}")
 
 print("Day and Amount of the highest net profit increment:", increment)
+
+def find_highest_deficit(data):
+    highest_deficit = 0
+    deficit_day = 0
+    for item in range(1, len(data)):
+        current_day = data[item]
+        previous_day = data[item - 1]
+        net_profit_current = current_day[4]
+        net_profit_previous = previous_day[4]
+        
+        if net_profit_current < net_profit_previous:
+            diff = net_profit_current - net_profit_previous
+            if diff < highest_deficit:
+                highest_deficit = diff
+                deficit_day = current_day[0]
+    return deficit_day, highest_deficit
+
+deficit= find_highest_deficit(data)
+
+
+
+print("Day and Amount of the highest net profit deficit:", deficit)
+
