@@ -2,7 +2,7 @@ from pathlib import Path
 import csv
 
 # Provided code to read data from the CSV file
-fp = Path.cwd() / "CashOnHand.csv"
+fp = Path.cwd() /"csv_report"/ "CashOnHand.csv"
 with fp.open(mode="r", encoding="UTF-8", newline="") as file:
     reader = csv.reader(file)
     data = list(reader)
@@ -63,5 +63,5 @@ print("[HIGHEST CASH INCREMENT] Day :", highest_increment_date, ", AMOUNT :", hi
 print("[HIGHEST CASH DEFICIT] Day :", highest_deficit_date, ", AMOUNT :", highest_deficit_amount)
 
 print("\n[CASH DEFICIT]")
-for date, deficit in all_deficits:
-    print("Day :", date, ", AMOUNT :", deficit)
+for date, deficits in all_deficits:
+    print("Day :", date, ", AMOUNT :", deficits)

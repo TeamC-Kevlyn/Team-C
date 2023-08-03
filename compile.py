@@ -3,7 +3,7 @@ import csv
 
 
 # create a file to csv file.
-fp = Path.cwd()/"profits and loss.csv"
+fp = Path.cwd()/"csv_report"/"profits and loss.csv"
 
 # read the csv file to append profit and quantity from the csv.
 with fp.open(mode="r", encoding="UTF-8", newline="") as file:
@@ -118,52 +118,78 @@ def calculate_overhead_percentage(Overhead_cost):
     return f'[HIGHEST OVERHEAD] {highest_category} : {highest_percentage}%' 
 print(calculate_overhead_percentage(Overhead_cost))
 
-# Create a file path to the CSV file
-fp = Path.cwd() /'csv_report'/"CashOnHand.csv"
+from pathlib import Path
+import csv
 
-# Read the CSV file and store the records
+# Provided code to read data from the CSV file
+fp = Path.cwd() /"csv_report"/ "CashOnHand.csv"
 with fp.open(mode="r", encoding="UTF-8", newline="") as file:
     reader = csv.reader(file)
-    next(reader)  # Skip header
-    salesRecords = list(reader)
+    data = list(reader)
 
-# Reverse the salesRecords list
-salesRecords.reverse()
+# Extract the header and data separately
+header = data[0]
+cash_data = data[1:]
 
-# Calculate the cumulative sum of cash changes for each day
-# def cashonhand():
-cumulative_sums = {}
-for row in salesRecords:
-    day = int(row[0])
-    cash_change = float(row[3])
-    cumulative_sums[day] = cumulative_sums.get(day, 0) + cash_change
+def calculate_increment_and_deficit(cash_data):
+    highest_increment_date = None
+    highest_increment_amount = 0
 
-# Find the maximum difference between consecutive days' cumulative sums
-max_difference = 0
-max_difference_day = 0
+    highest_deficit_date = None
+    highest_deficit_amount = 0
 
-for i in range(1, len(salesRecords)):
-    current_day = int(salesRecords[i][0])
-    previous_day = int(salesRecords[i - 1][0])
-    current_total = cumulative_sums[current_day]
-    previous_total = cumulative_sums[previous_day]
-    difference = current_total - previous_total
+    all_deficits = []
 
-    if difference > max_difference:
-        max_difference = difference
-        max_difference_day = current_day
+    previous_cash = None
 
-# Print the results
-print("Cash-on-Hand if current day is lower than the previous day:", max_difference)
-print("Day:", max_difference_day)
-print("Amount:", max_difference)
+    for row in cash_data:
+        day_str, cash_str = row[0], row[1]
+        cash = float(cash_str)
+        day = int(day_str)
+        
+        if previous_cash is not None:
+            difference = cash - previous_cash
+            
+            if difference > 0:
+                if difference > highest_increment_amount:
+                    highest_increment_amount = difference
+                    highest_increment_date = day
+            
+            elif difference < 0:
+                if difference < highest_deficit_amount:
+                    highest_deficit_amount = difference
+                    highest_deficit_date = day
+                all_deficits.append((day, abs(difference)))
+        
+        previous_cash = cash
 
-# cashonhand()
+    return (
+        highest_increment_date,
+        highest_increment_amount,
+        highest_deficit_date,
+        highest_deficit_amount,
+        all_deficits
+    )
+
+(
+    highest_increment_date,
+    highest_increment_amount,
+    highest_deficit_date,
+    highest_deficit_amount,
+    all_deficits
+) = calculate_increment_and_deficit(cash_data)
+
+print("[HIGHEST CASH INCREMENT] Day :", highest_increment_date, ", AMOUNT :", highest_increment_amount)
+print("[HIGHEST CASH DEFICIT] Day :", highest_deficit_date, ", AMOUNT :", highest_deficit_amount)
+
+print("\n[CASH DEFICIT]")
+for date, deficits in all_deficits:
+    print("Day :", date, ", AMOUNT :", deficits)
 
 
 
 with open('summary_report.txt', 'w') as file:
     file.write(calculate_overhead_percentage(Overhead_cost))
-    file.write(f"\n[CASH DEFICIT] DAY: {max_difference_day} AMOUNT: {max_difference}")
-    file.write(f"\n[NET PROFIT DEFECIT] {increment}")
+    file.write(f"\n[CASH DEFICIT] DAY: {highest_deficit_date} AMOUNT: {highest_deficit_amount}")
+    file.write(f"\n[NET PROFIT DEFECIT] {deficit}")
     
