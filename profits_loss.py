@@ -19,15 +19,12 @@ for item in data:
     item[3]= float(item[3])
     item[4]= float(item[4])
 
-def calculate_net_profit_difference(data):
-    net_profit_difference = []
-    for item in range(1, len(data)):
+def calculate_net_profit_deficit_or_highest_increment(data):
+    net_profit_difference= []
+    for item in range(1,len(data)):
         difference = data[item][4] - data[item - 1][4]
         net_profit_difference.append(difference)
-    return net_profit_difference
 
-def calculate_net_profit_deficit_or_highest_increment(data):
-    net_profit_difference = calculate_net_profit_difference(data)
 
     has_net_profit_deficit = False
     for item in range(1, len(data)):
@@ -61,4 +58,5 @@ def calculate_net_profit_deficit_or_highest_increment(data):
             print(f"[HIGHEST NET PROFIT SURPLUS] DAY : {highest_increment_date}, AMOUNT : {highest_increment_amount}")
 
 calculate_net_profit_deficit_or_highest_increment(data)
+
 
