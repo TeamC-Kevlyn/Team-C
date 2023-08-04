@@ -15,7 +15,7 @@ with fp.open(mode="r", encoding="UTF-8", newline="") as file:
         # get the Day, Items, Note, Amount for each record and append the Overhead_cost list
         Overhead_cost.append([row[0],row[1],row[2],row[3]])   
 
-def calculate_overhead_percentage(Overhead_cost):
+def calculate_overhead_percentage():
     expenses = [] # create an empty list
     # initialise variables
     total_amount = 0
@@ -51,4 +51,4 @@ def calculate_overhead_percentage(Overhead_cost):
 
     # return and print the highest overhead + category
     return f'[HIGHEST OVERHEAD] {highest_category} : {highest_percentage}%' 
-print(calculate_overhead_percentage(Overhead_cost))
+# calculate_overhead_percentage()
