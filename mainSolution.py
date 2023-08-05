@@ -1,11 +1,12 @@
-import csv_report,CashOnHand,Overhead,profits_loss
+import Overhead
+import CashOnHand
+import profits_loss
 
-def main ():
+def main():
 
-    forex = csv_report.api_function()
-    Overhead.overhead_function(forex)
-    CashOnHand.cashonhand_function(forex)
-    profits_loss.profitloss_function(forex)
+    Overhead.Overhead()
+    CashOnHand.cashonhand()
+    profits_loss.profit_loss()
 
-    main()
+main()
 
