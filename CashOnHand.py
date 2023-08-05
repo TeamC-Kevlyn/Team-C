@@ -2,7 +2,7 @@ from pathlib import Path
 import csv
 
 # Provided code to read data from the CSV file
-fp = Path.cwd() / "CashOnHand.csv"
+fp = Path.cwd() /"csv_report"/"CashOnHand.csv"
 with fp.open(mode="r", encoding="UTF-8", newline="") as file:
     reader = csv.reader(file)
     data = list(reader)
@@ -50,7 +50,7 @@ def analyze_cash_data(cash_data):
             deficits_output += f"[CASH DEFECIT] DAY: {date}, AMOUNT: USD {deficit:.1f}\n"
         return deficits_output
 
-result = analyze_cash_data(cash_data)
-print(result)
+# result = analyze_cash_data(cash_data)
+# print(result)
 
 # cashonhand()
