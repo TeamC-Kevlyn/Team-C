@@ -49,8 +49,3 @@ def analyze_cash_data(cash_data):
         for date, deficit in all_deficits:
             deficits_output += f"[CASH DEFICIT] DAY: {date}, AMOUNT: USD {deficit:.1f}\n"
         return deficits_output
-
-# result = analyze_cash_data(cash_data)
-# print(result)
-
-# cashonhand()

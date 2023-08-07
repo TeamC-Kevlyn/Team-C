@@ -60,5 +60,3 @@ def calculate_net_profit_deficit_or_highest_increment(data):
     
     return output
 
-# result = calculate_net_profit_deficit_or_highest_increment(data)
-# print(result)

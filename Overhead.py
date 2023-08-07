@@ -52,4 +52,3 @@ def calculate_overhead_percentage(Overhead_cost):
 
     # return and print the highest overhead + category
     return f'[HIGHEST OVERHEAD] {highest_category} : {highest_percentage}%' 
-# print(calculate_overhead_percentage(Overhead_cost))
