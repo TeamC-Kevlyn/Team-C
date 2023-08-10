@@ -15,6 +15,7 @@ cash_data = data[1:]
 def analyze_cash_data(cash_data):
     is_continuous_increase = True
     previous_cash = None
+    highest_increment = 0
     highest_increment_amount = 0
     highest_increment_date = None
 
@@ -48,4 +49,3 @@ def analyze_cash_data(cash_data):
         for date, deficit in all_deficits:
             deficits_output += f"[CASH DEFICIT] DAY: {date}, AMOUNT: USD {deficit:.1f}\n"
         return deficits_output
-    
