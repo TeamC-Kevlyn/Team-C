@@ -11,61 +11,52 @@ with fp.open(mode="r", encoding="UTF-8", newline="") as file:
     next(reader) # skip header
     data=list(reader)
 
-
+# def profit_loss():
 for item in data:
     item[0]= int(item[0])
-    item[1]= int(item[1])
-    item[2]= int(item[2])
-    item[3]= int(item[3])
-    item[4]= int(item[4])
-# Calculate the difference in net profit between consecutive days
-def calculate_net_profit_difference(data):
-    net_profit_difference = []
-    for item in range(1, len(data)):
+    item[1]= float(item[1])
+    item[2]= float(item[2])
+    item[3]= float(item[3])
+    item[4]= float(item[4])
+
+def calculate_net_profit_deficit_or_highest_increment(data):
+    output = ""
+    net_profit_difference= []
+    for item in range(1,len(data)):
         difference = data[item][4] - data[item - 1][4]
         net_profit_difference.append(difference)
-    return net_profit_difference
 
-# Find the day and amount with the highest increment in net profit
-def find_highest_increment(data):
-    net_profit_difference = calculate_net_profit_difference(data)
 
-    max_increment = max(net_profit_difference)
-    max_increment_index = net_profit_difference.index(max_increment) + 1
-    max_increment_day = data[max_increment_index][0]
-    return max_increment_day, max_increment
-
-increment = find_highest_increment(data)
-
-for item in range(1, len(data)):
-    previous_net_profit = data[item - 1][4]
-    current_net_profit = data[item][4]
-    
-    if current_net_profit < previous_net_profit:
-        difference = previous_net_profit - current_net_profit
-        print(f"[NET PROFIT DEFECIT] Day : {data[item][0]} , AMOUNT : {difference}")
-
-print("Day and Amount of the highest net profit increment:", increment)
-
-def find_highest_deficit(data):
-    highest_deficit = 0
-    deficit_day = 0
+    has_net_profit_deficit = False
     for item in range(1, len(data)):
-        current_day = data[item]
-        previous_day = data[item - 1]
-        net_profit_current = current_day[4]
-        net_profit_previous = previous_day[4]
-        
-        if net_profit_current < net_profit_previous:
-            diff = net_profit_current - net_profit_previous
-            if diff < highest_deficit:
-                highest_deficit = diff
-                deficit_day = current_day[0]
-    return deficit_day, highest_deficit
+        previous_net_profit = data[item - 1][4]
+        current_net_profit = data[item][4]
 
-deficit= find_highest_deficit(data)
+        if current_net_profit < previous_net_profit:
+            difference = previous_net_profit - current_net_profit
+            has_net_profit_deficit = True
+            output += f"[NET PROFIT DEFICIT] Day : {data[item][0]}, AMOUNT : {difference}\n"
 
+    if not has_net_profit_deficit:
+        highest_increment_date = None
+        highest_increment_amount = 0
+        previous_net_profit = 0  # Initialize the previous net profit before the loop
 
+        for row in data:
+            day, net_profit = row[0], row[4]
+            net_profit = float(net_profit)
+            day = int(day)
 
-print("Day and Amount of the highest net profit deficit:", deficit)
+            difference = net_profit - previous_net_profit  # Calculate the difference between current and previous net profits
+            previous_net_profit = net_profit  # Update the previous net profit for the next iteration
+
+            if difference > 0:
+                if difference > highest_increment_amount:
+                    highest_increment_amount = difference
+                    highest_increment_date = day
+
+        if highest_increment_date is not None:
+            output += f"[HIGHEST NET PROFIT SURPLUS] DAY : {highest_increment_date}, AMOUNT : {highest_increment_amount}\n"
+    
+    return output
 

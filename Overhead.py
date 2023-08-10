@@ -2,7 +2,7 @@ from pathlib import Path
 import csv
 
 # create a file to csv file.
-fp = Path.cwd()/'csv_report'/"Overhead.csv"
+fp = Path.cwd()/"csv_report"/"Overhead.csv"
 
 # read the csv file to append overhead from the csv.
 with fp.open(mode="r", encoding="UTF-8", newline="") as file:
@@ -15,6 +15,7 @@ with fp.open(mode="r", encoding="UTF-8", newline="") as file:
         # get the Day, Items, Note, Amount for each record and append the Overhead_cost list
         Overhead_cost.append([row[0],row[1],row[2],row[3]])   
 
+# def overhead():
 def calculate_overhead_percentage(Overhead_cost):
     expenses = [] # create an empty list
     # initialise variables
@@ -51,4 +52,3 @@ def calculate_overhead_percentage(Overhead_cost):
 
     # return and print the highest overhead + category
     return f'[HIGHEST OVERHEAD] {highest_category} : {highest_percentage}%' 
-print(calculate_overhead_percentage(Overhead_cost))
